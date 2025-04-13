@@ -10,11 +10,32 @@ use App\Http\Controllers\Api\Unit\UnitController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Country\CountryController;
 use App\Http\Controllers\Api\City\CityController;
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
-Route::apiResource('currencies', CurrencyController::class);
+
+Route::middleware(['api', \Illuminate\Http\Middleware\HandleCors::class])->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    })->middleware('auth:sanctum');
+
+    Route::controller(AuthUserController::class)->group(function () {
+        // Public routes
+        Route::post('/login', [AuthUserController::class, 'login']);
+        Route::post('/register', [AuthUserController::class, 'register']);
+
+        // Protected routes
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::post('/logout', [AuthUserController::class, 'logout']);
+            Route::post('/refresh', [AuthUserController::class, 'refresh']);
+            Route::get('/me', [AuthUserController::class, 'me']);
+        });
+    });
+
+    // All other API routes go here
+});
+
+// Existing routes below
+
+
 
 Route::get('test', function (Request $request) {
     return response()->json("the");
@@ -23,16 +44,16 @@ Route::get('test', function (Request $request) {
 
 
 
-Route::middleware(['cors'])->controller(AuthUserController::class)->group(function () {
-    // Public routes (no authentication required)
-    Route::post('login', 'login');
-    Route::post('register', 'register');
+Route::middleware(['api'])->controller(AuthUserController::class)->group(function () {
+    // Public routes
+    Route::post('/login', [AuthUserController::class, 'login']);
+    Route::post('/register', [AuthUserController::class, 'register']);
 
-    // Protected routes (authentication required)
+    // Protected routes
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('logout', 'logout');
-        Route::post('refresh', 'refresh');
-        Route::get('me', 'me');
+        Route::post('/logout', [AuthUserController::class, 'logout']);
+        Route::post('/refresh', [AuthUserController::class, 'refresh']);
+        Route::get('/me', [AuthUserController::class, 'me']);
     });
 });
 
