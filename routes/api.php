@@ -103,6 +103,6 @@ Route::middleware(['auth:sanctum'])->prefix('currencies')->group(function () {
     Route::delete('/{id}', [CurrencyController::class, 'destroy']);
 });
 
-Route::get('adress', function () {
+Route::get('Elegance_backend', function () {
     dd('welcome');
 });
