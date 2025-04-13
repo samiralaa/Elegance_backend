@@ -23,7 +23,7 @@ Route::get('test', function (Request $request) {
 
 
 
-Route::controller(AuthUserController::class)->group(function () {
+Route::middleware(['cors'])->controller(AuthUserController::class)->group(function () {
     // Public routes (no authentication required)
     Route::post('login', 'login');
     Route::post('register', 'register');
@@ -105,5 +105,5 @@ Route::middleware(['auth:sanctum'])->prefix('currencies')->group(function () {
 
 
 Route::get('Elegance_backend', function () {
-    dd('welcome');
+    return ('name');
 });
