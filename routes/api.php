@@ -94,11 +94,15 @@ Route::middleware(['auth:sanctum'])->prefix('categories')->group(function () {
     Route::delete('/{id}', [CategoryController::class, 'destroy']);
 });
 
-// add api for currencies 
+// add api for currencies
 Route::middleware(['auth:sanctum'])->prefix('currencies')->group(function () {
     Route::get('/', [CurrencyController::class, 'index']);
     Route::get('/{id}', [CurrencyController::class,'show']);
     Route::post('/', [CurrencyController::class,'store']);
     Route::post('/{id}', [CurrencyController::class, 'update']);
     Route::delete('/{id}', [CurrencyController::class, 'destroy']);
+});
+
+Route::get('adress', function () {
+    dd('welcome');
 });
