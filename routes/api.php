@@ -13,49 +13,37 @@ use App\Http\Controllers\Api\City\CityController;
 
 
 Route::middleware(['api', \Illuminate\Http\Middleware\HandleCors::class])->group(function () {
+
+    // Consolidated CORS-protected routes
+    // Consolidated routes with CORS protection
+    // All API routes with CORS protection
+
     Route::get('/user', function (Request $request) {
         return $request->user();
     })->middleware('auth:sanctum');
 
+    // Authentication routes
     Route::controller(AuthUserController::class)->group(function () {
-        // Public routes
-        Route::post('/login', [AuthUserController::class, 'login']);
-        Route::post('/register', [AuthUserController::class, 'register']);
+        Route::post('/login', 'login');
+        Route::post('/register', 'register');
 
         // Protected routes
         Route::middleware(['auth:sanctum'])->group(function () {
-            Route::post('/logout', [AuthUserController::class, 'logout']);
-            Route::post('/refresh', [AuthUserController::class, 'refresh']);
-            Route::get('/me', [AuthUserController::class, 'me']);
+            Route::post('/logout', 'logout');
+            Route::post('/refresh', 'refresh');
+            Route::get('/me', 'me');
         });
     });
 
-    // All other API routes go here
-});
-
-// Existing routes below
-
-
-
-Route::get('test', function (Request $request) {
-    return response()->json("the");
-});
+    // Test route
+    Route::get('test', function () {
+        return response()->json("test");
+    });
 // routes/api.php
 
 
 
-Route::middleware(['api'])->controller(AuthUserController::class)->group(function () {
-    // Public routes
-    Route::post('/login', [AuthUserController::class, 'login']);
-    Route::post('/register', [AuthUserController::class, 'register']);
 
-    // Protected routes
-    Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('/logout', [AuthUserController::class, 'logout']);
-        Route::post('/refresh', [AuthUserController::class, 'refresh']);
-        Route::get('/me', [AuthUserController::class, 'me']);
-    });
-});
 
 // Route::get('Register',[])
 
@@ -78,6 +66,9 @@ Route::middleware(['auth:sanctum'])->prefix('brands')->group(function () {
 });
 
 // Public Country API Routes
+});
+
+// Public Country API Routes
 Route::prefix('countries')->group(function () {
     Route::get('/', [CountryController::class, 'index']);
     Route::get('/{id}', [CountryController::class, 'show']);
@@ -86,8 +77,7 @@ Route::prefix('countries')->group(function () {
     Route::delete('/{id}', [CountryController::class, 'destroy']);
 });
 
-// add routs to city controller
-// Protected City API Routes with Token Authentication
+// City API Routes
 Route::prefix('cities')->group(function () {
     Route::get('/', [CityController::class, 'index']);
     Route::get('/{id}', [CityController::class, 'show']);
@@ -95,7 +85,7 @@ Route::prefix('cities')->group(function () {
     Route::put('/{id}', [CityController::class, 'update']);
     Route::delete('/{id}', [CityController::class, 'destroy']);
 });
-// Protected Unit API Routes with Token Authentication
+
 Route::middleware(['auth:sanctum'])->prefix('units')->group(function () {
     Route::get('/', [UnitController::class, 'index']);
     Route::get('/{id}', [UnitController::class, 'show']);
@@ -103,9 +93,6 @@ Route::middleware(['auth:sanctum'])->prefix('units')->group(function () {
     Route::put('/{id}', [UnitController::class, 'update']);
     Route::delete('/{id}', [UnitController::class, 'destroy']);
 });
-
-
-
 
 Route::middleware(['auth:sanctum'])->prefix('categories')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);
@@ -123,7 +110,6 @@ Route::middleware(['auth:sanctum'])->prefix('currencies')->group(function () {
     Route::post('/{id}', [CurrencyController::class, 'update']);
     Route::delete('/{id}', [CurrencyController::class, 'destroy']);
 });
-
 
 Route::get('Elegance_backend', function () {
     return ('name');
