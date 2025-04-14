@@ -30,6 +30,7 @@ class BrandController extends Controller
             return $this->successResponse($brands);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage());
+            
         }
     }
 

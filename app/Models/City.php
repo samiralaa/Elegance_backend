@@ -29,4 +29,8 @@ class City extends Model
     {
         return $query->where('is_deleted', false);
     }
+    public function adriss()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

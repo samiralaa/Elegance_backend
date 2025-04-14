@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Address\AddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CurrencyController;
@@ -111,6 +112,24 @@ Route::middleware(['auth:sanctum'])->prefix('currencies')->group(function () {
     Route::delete('/{id}', [CurrencyController::class, 'destroy']);
 });
 
-Route::get('Elegance_backend', function () {
-    return ('name');
+
+Route::middleware(['auth:sanctum'])->prefix('address')->group(function(){
+    Route::get('/',[AddressController::class,'index']);
+    Route::post('/', [AddressController::class, 'store']);
+    Route::get('/{id}', [AddressController::class, 'show']);
+    Route::post('/{id}', [AddressController::class, 'update']);
+    Route::delete('/{id}',[AddressController::class,'delete']);
 });
+
+
+
+
+
+Route::get('Elegance_backend', function () {
+    return response()->json([
+        'status' => true,
+        'message' => 'Welcome to Elegance Backend API',
+        'data' => null
+    ]);
+})->name('elegance_backend');
+

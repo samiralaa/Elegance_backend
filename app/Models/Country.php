@@ -29,4 +29,9 @@ class Country extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function adriss()
+    {
+        return $this->hasMany(Address::class);
+    }
 }
