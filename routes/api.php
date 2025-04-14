@@ -103,9 +103,12 @@ Route::middleware(['auth:sanctum'])->prefix('categories')->group(function () {
 });
 
 
-Route::prefix('catffegories/website')->group(function () {
+Route::prefix('website')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/{id}', [CategoryController::class, 'show']);
+    Route::get('/brands', [BrandController::class, 'index']);
+    Route::get('brands/{id}', [BrandController::class, 'show']);
+
 });
 
 // add api for currencies
