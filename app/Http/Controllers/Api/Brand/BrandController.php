@@ -25,6 +25,7 @@ class BrandController extends Controller
      */
     public function index()
     {
+     
         try {
             $brands = $this->brandService->getAllBrands();
             return $this->successResponse($brands);
