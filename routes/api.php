@@ -102,6 +102,12 @@ Route::middleware(['auth:sanctum'])->prefix('categories')->group(function () {
     Route::delete('/{id}', [CategoryController::class, 'destroy']);
 });
 
+
+Route::prefix('catffegories/website')->group(function () {
+    Route::get('/', [CategoryController::class, 'index']);
+    Route::get('/{id}', [CategoryController::class, 'show']);
+});
+
 // add api for currencies
 Route::middleware(['auth:sanctum'])->prefix('currencies')->group(function () {
     Route::get('/', [CurrencyController::class, 'index']);
