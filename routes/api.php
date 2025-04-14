@@ -1,6 +1,11 @@
 <?php
+
 use App\Mail\TransactionalMail;
 use Illuminate\Support\Facades\Mail;
+
+
+use App\Http\Controllers\Api\Address\AddressController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CurrencyController;
@@ -129,9 +134,17 @@ Route::middleware(['auth:sanctum'])->prefix('currencies')->group(function () {
     Route::delete('/{id}', [CurrencyController::class, 'destroy']);
 });
 
-Route::get('Elegance_backend', function () {
-    $toEmail = "devsamiralzeer243@gmail.com";
-    $body = "Hello, this is a test email.";
-    Mail::to($toEmail)->send(new TransactionalMail($body));
+
+
+Route::middleware(['auth:sanctum'])->prefix('address')->group(function(){
+    Route::get('/',[AddressController::class,'index']);
+    Route::post('/', [AddressController::class, 'store']);
+    Route::get('/{id}', [AddressController::class, 'show']);
+    Route::post('/{id}', [AddressController::class, 'update']);
+    Route::delete('/{id}',[AddressController::class,'delete']);
 });
+
+
+
+
 

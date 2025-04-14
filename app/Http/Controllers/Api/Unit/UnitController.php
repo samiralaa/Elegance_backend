@@ -26,7 +26,7 @@ class UnitController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $units = $this->unitService->getAllUnits();
+            $units = $this->unitService->index();
             return $this->successResponse($units, 'Units retrieved successfully');
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage());
@@ -90,4 +90,4 @@ class UnitController extends Controller
             return $this->errorResponse($e->getMessage());
         }
     }
-} 
+}

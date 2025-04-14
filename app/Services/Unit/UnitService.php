@@ -7,7 +7,7 @@ use App\Traits\CrudTrait;
 class UnitService
 {
     use  CrudTrait;
-
+    protected $model;
     public function __construct(Unit $model)
     {
         $this->model = $model;
@@ -16,9 +16,10 @@ class UnitService
     /**
      * Get all units.
      */
-    public function getAllUnits()
+    public function index()
     {
-        return $this->getAll();
+        $units= $this->model->all();
+        return $units;
     }
 
     /**
@@ -26,7 +27,8 @@ class UnitService
      */
     public function getUnitById(int $id)
     {
-        return $this->getById($id);
+        $unit= $this->getById($id);
+        return $unit;
     }
 
     /**
@@ -34,7 +36,9 @@ class UnitService
      */
     public function createUnit(array $data)
     {
-        return $this->create($data);
+        $unit= $this->model->create($data);
+        return $unit;
+
     }
 
     /**

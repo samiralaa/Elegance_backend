@@ -10,10 +10,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-   
+
     use HasFactory, Notifiable,HasApiTokens;
 
-    
+
     protected $fillable = [
         'name',
         'email',
@@ -22,18 +22,22 @@ class User extends Authenticatable
         'role'
     ];
 
-    
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-   
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function adriss()
+    {
+        return $this->hasMany(Address::class);
     }
 }
