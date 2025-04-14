@@ -47,7 +47,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = $this->categoryService->getById($id);
-        return $this->successResponse($category, 'Catsssssssssssegory fetched successfully');
+        return $this->successResponse($category, 'category fetched successfully');
     }
 
     public function update(Request $request, $id)
