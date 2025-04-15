@@ -10,7 +10,7 @@ class UnitService
     protected $model;
     public function __construct(Unit $model)
     {
-        $this->model = $model;
+        $this->setModel($model);
     }
 
     /**
@@ -27,16 +27,15 @@ class UnitService
      */
     public function getUnitById(int $id)
     {
-        $unit= $this->getById($id);
+        $unit = $this->getById($id);
         return $unit;
     }
-
     /**
      * Create a new unit.
      */
     public function createUnit(array $data)
     {
-        $unit= $this->model->create($data);
+        $unit= $this->create($data);
         return $unit;
 
     }
@@ -46,7 +45,9 @@ class UnitService
      */
     public function updateUnit(int $id, array $data)
     {
-        return $this->update($id, $data);
+
+        $unit = $this->update($id, $data);
+        return $unit;
     }
 
     /**
@@ -54,6 +55,8 @@ class UnitService
      */
     public function deleteUnit(int $id)
     {
-        return $this->delete($id);
+        $model = $this->model->findOrFail($id);
+        $model->delete();
+        return $model;
     }
 }

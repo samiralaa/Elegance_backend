@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CurrencyController;
 use App\Http\Controllers\Api\AuthUserController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Brand\BrandController;
+use App\Http\Controllers\Api\Cart\CartController;
 use App\Http\Controllers\Api\Unit\UnitController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Country\CountryController;
@@ -91,7 +92,7 @@ Route::middleware(['auth:sanctum'])->prefix('units')->group(function () {
     Route::get('/', [UnitController::class, 'index']);
     Route::get('/{id}', [UnitController::class, 'show']);
     Route::post('/', [UnitController::class, 'store']);
-    Route::put('/{id}', [UnitController::class, 'update']);
+    Route::POST('/{id}', [UnitController::class, 'update']);
     Route::delete('/{id}', [UnitController::class, 'destroy']);
 });
 
@@ -128,6 +129,13 @@ Route::middleware(['auth:sanctum'])->prefix('address')->group(function(){
     Route::get('/{id}', [AddressController::class, 'show']);
     Route::post('/{id}', [AddressController::class, 'update']);
     Route::delete('/{id}',[AddressController::class,'delete']);
+});
+Route::middleware(['auth:sanctum'])->prefix('cart')->group(function(){
+    Route::get('/',[CartController::class,'index']);
+    Route::post('/', [CartController::class, 'store']);
+    Route::get('/{id}',[CartController::class,'show']);
+    Route::post('/{id}',[CartController::class,'update']);
+    Route::delete('/{id}',[CartController::class,'delete']);
 });
 
 

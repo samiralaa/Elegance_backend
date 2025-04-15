@@ -26,26 +26,12 @@ class AddressController extends Controller
             return $this->errorResponse($e->getMessage());
 
         }
-        //     if ($address) {
-        //         return response()->json([
-        //             'message' => 'Address all found',
-        //             'data' => $address
-        //         ], 200);
-        //     }
-
-        //     return response()->json([
-        //         'message' => 'Address not found all'
-        //     ], 404);
+   
         }
 
     public function store(StoreRequestAddress $request)
     {
-        // $data = $request->validated();
-        // $address = $this->AddressService->create($data);
-        // return response()->json([
-        //     'message' => 'Address created successfully',
-        //     'data' => $address
-        // ], 201);
+
         try {
             $data = $request->validated();
         $address = $this->AddressService->create($data);
@@ -59,7 +45,6 @@ class AddressController extends Controller
 
     public function show(int $id)
     {
-
         // $address = $this->AddressService->find($id);
         try {
             $address = $this->AddressService->find($id);

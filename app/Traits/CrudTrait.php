@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Log;
 trait CrudTrait
 {
     protected $crudModel;
-
+    public function setModel($model)
+{
+    $this->crudModel = $model;
+}
     public function getAll()
     {
         try {

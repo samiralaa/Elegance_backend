@@ -73,5 +73,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         return $this->categoryService->destroy($id);
+        // $deleted = $this->categoryService->destroy($id);
+        // return $this->successResponse(['deleted' => $deleted]);
     }
 }
