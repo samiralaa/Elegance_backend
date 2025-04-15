@@ -1,6 +1,11 @@
 <?php
 
+use App\Mail\TransactionalMail;
+use Illuminate\Support\Facades\Mail;
+
+
 use App\Http\Controllers\Api\Address\AddressController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CurrencyController;
@@ -12,7 +17,7 @@ use App\Http\Controllers\Api\Unit\UnitController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Country\CountryController;
 use App\Http\Controllers\Api\City\CityController;
-
+use App\Http\Controllers\Api\Product\ProductController;
 
 Route::middleware(['api', \Illuminate\Http\Middleware\HandleCors::class])->group(function () {
 
@@ -88,6 +93,14 @@ Route::prefix('cities')->group(function () {
     Route::delete('/{id}', [CityController::class, 'destroy']);
 });
 
+Route::middleware(['auth:sanctum'])->prefix('products')->group(function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::get('/{id}', [ProductController::class,'show']);
+    Route::post('/', [ProductController::class,'store']);
+    Route::put('/{id}', [ProductController::class, 'update']);
+    Route::delete('/{id}', [ProductController::class, 'destroy']);
+});
+
 Route::middleware(['auth:sanctum'])->prefix('units')->group(function () {
     Route::get('/', [UnitController::class, 'index']);
     Route::get('/{id}', [UnitController::class, 'show']);
@@ -108,7 +121,7 @@ Route::middleware(['auth:sanctum'])->prefix('categories')->group(function () {
 Route::prefix('website')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/{id}', [CategoryController::class, 'show']);
-    Route::get('/brands', [BrandController::class, 'index']);
+    Route::get('/brands/section', [BrandController::class, 'index']);
     Route::get('brands/{id}', [BrandController::class, 'show']);
 
 });
@@ -121,6 +134,7 @@ Route::middleware(['auth:sanctum'])->prefix('currencies')->group(function () {
     Route::post('/{id}', [CurrencyController::class, 'update']);
     Route::delete('/{id}', [CurrencyController::class, 'destroy']);
 });
+
 
 
 Route::middleware(['auth:sanctum'])->prefix('address')->group(function(){
@@ -141,12 +155,4 @@ Route::middleware(['auth:sanctum'])->prefix('cart')->group(function(){
 
 
 
-
-Route::get('Elegance_backend', function () {
-    return response()->json([
-        'status' => true,
-        'message' => 'Welcome to Elegance Backend API',
-        'data' => null
-    ]);
-})->name('elegance_backend');
 

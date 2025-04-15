@@ -16,11 +16,7 @@ class CurrencyController extends Controller
 
     protected function validationErrorResponse($errors)
     {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Validation failed',
-            'errors' => $errors
-        ], 422);
+        return $this->validationErrorResponse($errors, 'Validation failed');
     }
 
     public function __construct(protected CurrencyService $service)

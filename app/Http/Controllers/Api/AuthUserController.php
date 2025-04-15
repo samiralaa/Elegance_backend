@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Services\Users\AuthService;
+use App\Traits\ApiResponseTrait;
 class AuthUserController extends Controller
 {
+    use ApiResponseTrait;
     protected $authService;
 
     public function __construct(AuthService $authService)
@@ -23,10 +25,10 @@ class AuthUserController extends Controller
         $token = $this->authService->login($credentials);
 
         if ($token) {
-            return response()->json( $token);
+            return $this->successResponse($token, 'Login successful');
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return $this->unauthorizedResponse('Invalid credentials');
     }
 
     // Register a new user
@@ -41,9 +43,7 @@ class AuthUserController extends Controller
         // Call the register method from the AuthService to create the user and generate a token
         $token = $this->authService->register($data);
         // Return the token in the response
-        return response()->json(['token' => $token,
-        'user' => $data // Include the user details in the response as well for better security
-    ]);
+        return $this->createdResponse(['token' => $token, 'user' => $data], 'User registered successfully');
     }
 
 
@@ -58,12 +58,12 @@ class AuthUserController extends Controller
     {
         $token = $this->authService->refresh();
 
-        return response()->json(['token' => $token]);
+        return $this->successResponse(['token' => $token], 'Token refreshed successfully');
     }
 
     // Get the authenticated user
     public function me()
     {
-        return response()->json($this->authService->me());
+        return $this->successResponse($this->authService->me(), 'User details retrieved');
     }
 }
