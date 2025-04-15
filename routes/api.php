@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\Unit\UnitController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Country\CountryController;
 use App\Http\Controllers\Api\City\CityController;
+use App\Http\Controllers\Api\Client\ClientAuthController;
 use App\Http\Controllers\Api\Product\ProductController;
 
 Route::middleware(['api', \Illuminate\Http\Middleware\HandleCors::class])->group(function () {
@@ -152,7 +153,14 @@ Route::middleware(['auth:sanctum'])->prefix('cart')->group(function(){
     Route::delete('/{id}',[CartController::class,'delete']);
 });
 
+// Route::prefix('client')->controller(ClientAuthController::class)->group(function () {
+//     Route::post('/register', 'register');
+// });
 
 
+Route::middleware(['auth:sanctum'])->prefix('clients')->group(function(){
 
+    Route::post('/', [ClientAuthController::class, 'register']);
+
+});
 
