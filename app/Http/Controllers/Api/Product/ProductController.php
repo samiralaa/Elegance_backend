@@ -24,6 +24,10 @@ class ProductController extends Controller
         return $this->successResponse($this->productService->getProducts());
     }
 
+    public function latestProducts()
+    {
+        return $this->successResponse($this->productService->getLatestProducts());
+    }
     public function show($id)
     {
         return $this->successResponse($this->productService->getOneProduct($id));
