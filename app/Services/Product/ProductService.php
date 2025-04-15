@@ -3,10 +3,11 @@
 namespace App\Services\Product;
 
 use App\Models\Product;
+use Carbon\Carbon;
+
 use App\Traits\ApiResponse;
 use App\Traits\CrudTrait;
 use App\Http\Requests\Product\ProductRequest;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 
@@ -28,9 +29,17 @@ class ProductService
 
     public function getOneProduct($id): Product
     {
-        return $this->model->findOrFail($id);
+        return $this->model->with(['images','currency','category'])->findOrFail($id);
     }
-
+    public function getLatestProducts(){
+        return $this->model
+        ->with(['images', 'currency', 'category'])
+        ->where('created_at', '>', Carbon::now()->subDays(7))
+        ->latest() // orders by created_at DESC
+        ->take(3)   // or ->limit(3)
+        ->get();
+    
+    }
     public function createProduct(ProductRequest $request): JsonResponse
     {
          $product = $this->model->create($request->validated());

@@ -20,7 +20,7 @@ class ProductRequest extends FormRequest
             'description_en' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'is_available' => 'required|boolean',
-            'show_on_home_page' => 'required|boolean',
+            'show_on_home_page' => 'nullable|boolean',
             'category_id' => 'required|exists:categories,id',
             'currency_id' => 'required|exists:currencies,id',
             'country_id' => 'required|exists:countries,id',
