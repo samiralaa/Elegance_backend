@@ -161,9 +161,8 @@ Route::middleware(['auth:sanctum'])->prefix('cart')->group(function(){
 // });
 
 
-Route::middleware(['auth:sanctum'])->prefix('clients')->group(function(){
 
-    Route::post('/', [ClientAuthController::class, 'register']);
+    Route::post('/clients', [ClientAuthController::class, 'register']);
 
-});
+
 

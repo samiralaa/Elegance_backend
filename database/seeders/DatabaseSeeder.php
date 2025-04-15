@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             'password' =>Hash::make("password"),
             'role' => 'admin',
             'phone' => '1232345678',
+            'country_id' => 1,
+            
         ]);
     }
 }
