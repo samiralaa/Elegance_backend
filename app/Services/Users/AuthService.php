@@ -85,4 +85,18 @@ class AuthService
             ]
         ];
     }
+
+    /**
+     * Get the authenticated user's profile
+     *
+     * @return array
+     */
+    public function me(): array
+    {
+        $user = Auth::user();
+        return [
+            'user' => $user,
+            'token' => $user->currentAccessToken()
+        ];
+    }
 }

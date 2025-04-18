@@ -3,7 +3,7 @@
 use App\Mail\TransactionalMail;
 use Illuminate\Support\Facades\Mail;
 
-
+use App\Http\Controllers\Api\Favorite\FavoriteController;
 use App\Http\Controllers\Api\Address\AddressController;
 
 use Illuminate\Http\Request;
@@ -49,7 +49,19 @@ Route::middleware(['api', \Illuminate\Http\Middleware\HandleCors::class])->group
     });
 // routes/api.php
 
+Route::controller(AuthUserController::class)
+->prefix('client')
+->group(function () {
+    Route::post('/login', 'login');
+    Route::post('/register', 'register');
 
+    // Protected routes
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::post('/logout', 'logout');
+        Route::post('/refresh', 'refresh');
+        Route::get('/me', 'me');
+    });
+});
 
 
 
@@ -166,3 +178,9 @@ Route::middleware(['auth:sanctum'])->prefix('cart')->group(function(){
 
 
 
+// routes/api.php
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/favorites', [FavoriteController::class, 'index']);
+    Route::post('/favorites', [FavoriteController::class, 'store']);
+    Route::delete('/favorites/{product_id}', [FavoriteController::class, 'destroy']);
+});
